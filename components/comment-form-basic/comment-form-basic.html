@@ -1,0 +1,16 @@
+
+<h4>Comment {{ mode }} {{ mode == 'create' ? 'under ' + parent_idx : comment.idx }}</h4>
+<form [formGroup]="formGroup" (ngSubmit)=" onSubmit() "  novalidate>
+
+  <file-form-basic [files]=" files "></file-form-basic>
+  
+  <div class="form-group">
+    <label for="content-box">Content</label>
+    <textarea id="content-box" class="form-control" formControlName="content"></textarea>
+    <div class="form-text text-muted">Please, input content</div>
+  </div>
+  
+  <button type="submit" class="btn btn-primary">Create Comment</button>
+  <button type="button" class="btn btn-primary" (click)="onClickCancel()">Cancel</button>
+
+</form>

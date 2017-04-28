@@ -1,0 +1,39 @@
+
+<div class="card mb-2">
+  <div class="card-block">
+    <h3 *ngIf=" isCreate() " class="card-title">Writing on {{ post_config_id }} Forum</h3>
+    <h3 *ngIf=" isEdit() " class="card-title">Editing No. {{ post.idx }}</h3>
+    <form [formGroup]="formGroup" (ngSubmit)="onSubmit()" novalidate>
+        
+        <file-form-basic [files]=" files "></file-form-basic>
+
+        
+        <div *ngIf=" option?.hideForumID === true && isCreate() " class="form-group">
+          <label for="title-box">Forum ID</label>
+          <input type="text" class="form-control" id="title-box" formControlName="post_config_id">
+          <small class="form-text text-muted">Input forum ID like 'qna'</small>
+        </div>
+
+        <div *ngIf=" option?.showTitle === true " class="form-group">
+          <label for="title-box">Title</label>
+          <input type="text" class="form-control" id="title-box" formControlName="title">
+          <small class="form-text text-muted">Input title</small>
+        </div>
+
+        <div *ngIf=" option?.showContent === true " class="form-group">
+          <label for="content-box">Content</label>
+          <textarea class="form-control" id="content-box" formControlName="content"></textarea>
+          <small class="form-text text-muted">Please, input content</small>
+        </div>
+        
+        <div *ngIf=" option?.showLink === true " class="form-group">
+          <label for="link-box">Link</label>
+          <input class="form-control" id="link-box" formControlName="link">
+          <small class="form-text text-muted">Any links like homepage</small>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Post</button>
+        <button type="button" class="btn btn-Secondary" (click)=" onClickCancel() ">Cancel</button>
+    </form>
+  </div>
+</div>

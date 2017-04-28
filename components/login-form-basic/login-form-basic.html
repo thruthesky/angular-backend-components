@@ -1,0 +1,10 @@
+
+  <div class="form-container">
+    <label for="inputId" class="sr-only">Email address</label>
+    <input type="text" id="inputId" name="id" class="form-control" [(ngModel)]="form.id" placeholder="UserID" required autofocus>
+    <label for="inputPassword" class="sr-only">Password</label>
+    <input type="password" id="inputPassword" name="password" class="form-control" [(ngModel)]="form.password" placeholder="Password" required>
+    <button class="btn btn-primary btn-block btn-sm" type="button" (click)="onClickLogin()">Sign in</button>
+    <button class="btn btn-success btn-block btn-sm" type="button" (click)="onClickCancel()">Cancel</button>
+  </div>
+

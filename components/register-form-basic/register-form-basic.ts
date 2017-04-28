@@ -22,10 +22,10 @@ import {
 type u = _USER_RESPONSE;
 
 @Component({
-  selector: 'register-form-basic-component',
-  templateUrl: './register-form-basic-component.html'
+  selector: 'register-form-basic',
+  templateUrl: './register-form-basic.html'
 })
-export class RegisterFormBasicComponent {
+export class RegisterFormBasic {
 
   @Output() cancel = new EventEmitter<void>();
   @Output() register = new EventEmitter<void>();
@@ -151,6 +151,13 @@ export class RegisterFormBasicComponent {
 
 
 
+  /**
+   * 
+   * Upload/Replace user's profile photo.
+   * 
+   * 
+   * @param _ HTML FORM INPUT type=file element.
+   */
   onChangeFileUpload( _ ) {
     this.file.uploadPrimaryPhoto( _.files[0], p => {
       this.percentage = p;

@@ -1,0 +1,22 @@
+<div class="form-files clearfix">
+    <div class="file w-25 float-left" *ngFor=" let file of files ">
+
+        <span (click)=" onClickDeleteFile( file ) " class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x fa-inverse"></i>
+            <i class="fa fa-trash fa-stack-1x"></i>
+        </span>
+
+        <img style="width: 100%" src="{{ file.url + '&crop=100x100x70' }}">
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="file-box">Upload Photos</label>
+    <div *ngIf=" percentage " class="progress mb-2">
+        <div class="progress-bar" role="progressbar" [style.width]=" percentage + '%' ">{{ percentage }} %</div>
+    </div>
+
+    <input type="file" class="form-control-file" id="file-box" #file (change)="onChangeFile(file)">
+    <small class="form-text text-muted">Please select a photo to upload</small>
+</div>
+
