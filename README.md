@@ -11,6 +11,13 @@ $ git submodule add https://github.com/thruthesky/angular-backend-components src
 ````
 
 
+# Tips
+
+
+* Anonymous can post / edit / delete.
+
+
+
 
 # How to use
 

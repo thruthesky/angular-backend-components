@@ -8,8 +8,12 @@
           style=" width: 40px; height: 40px; border-radius: 50%; ">
         </td>
         <td>
-          <h4 class="card-title">{{ post.title }}</h4>
-          <h6 class="card-subtitle mb-2 text-muted">{{ post.idx }}, {{ post.user?.name }}</h6>
+          <h4 class="card-title" [class.deleted]=" post.deleted" >{{ post.title }}</h4>
+
+          <h6 class="card-subtitle mb-2 text-muted">
+            {{ post.idx }}
+            <span *ngIf=" ! post.deleted ">{{ post.user?.name }}</span>
+            </h6>
         </td>
       </tr>
     </table>
@@ -23,8 +27,13 @@
         </div>
       </div>
     
-      <div class="buttons">
+      <div *ngIf=" ! post.deleted " class="buttons">
         <span *ngIf=" myPost " class="card-link" (click)=" showPostEditForm = !showPostEditForm ">Edit</span>
+        <span *ngIf=" showPostDeletePasswordForm ">
+          <input #password>
+          <button type="button" class="btn btn-danger" (click)=" onClickDeleteAnonymous( password.value ) ">Delete</button>
+        </span>
+        <span *ngIf=" myPost && ! showPostDeletePasswordForm " class="card-link" (click)=" onClickDelete( ) ">Delete</span>
         <span class="card-link" (click)=" showCommentForm = !showCommentForm ">Reply</span>
         <span class="card-link" (click)=" onClickLike('G') ">Like({{ post.vote_good }})</span>
         <span class="card-link" (click)=" onClickLike('B') ">Dislike({{ post.vote_bad }})</span>

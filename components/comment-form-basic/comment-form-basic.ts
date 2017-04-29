@@ -37,7 +37,7 @@ export class CommentFormBasic implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private postComment: PostComment,
+    public postComment: PostComment,
     private file: File
   ) {
   }
@@ -53,13 +53,15 @@ export class CommentFormBasic implements OnInit {
 
     if ( this.mode == 'create' ) {
       this.formGroup = this.fb.group({
-        content: []
+        content: [],
+        password: []
       });
     }
     else {
       this.files = this.comment.files ? this.comment.files : [];
       this.formGroup = this.fb.group({
-          content: [ this.comment.content ]
+          content: [ this.comment.content ],
+          password: []
       });
     }
   }
@@ -73,7 +75,8 @@ export class CommentFormBasic implements OnInit {
     
     let req: _COMMENT_CREATE = {
       parent_idx: this.parent_idx,
-      content: this.formGroup.get('content').value
+      content: this.formGroup.get('content').value,
+      password: this.formGroup.get('password').value
     };
 
     req.file_hooks = this.files.map( (f:_FILE) => f.idx );
@@ -105,7 +108,8 @@ export class CommentFormBasic implements OnInit {
     
     let req: _COMMENT_EDIT = {
       idx: this.comment.idx,
-      content: this.formGroup.get('content').value
+      content: this.formGroup.get('content').value,
+      password: this.formGroup.get('password').value
     };
     req.file_hooks = this.files.map( (f:_FILE) => f.idx );
             console.log('files: ', this.files);

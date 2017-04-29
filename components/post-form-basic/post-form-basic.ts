@@ -26,15 +26,28 @@ export class PostFormBasic implements OnInit {
     formGroup: FormGroup;
     files: Array<_FILE> = [];
 
+
+    /**
+     * Options of showing input boxes.
+     */
+    private default = {
+        forumId: false,
+        title: true,
+        content: true,
+        link: false,
+        file: true,
+        cancel: true
+    };
     constructor(
         private fb: FormBuilder,
         public file: File,
-        private postData: PostData
+        public postData: PostData
     ) {
     }
 
     ngOnInit() {
 
+        this.option = Object.assign( this.default, this.option );
         /// test
         //this.post_config_id = 'qna'; // test
         this.createForm();
@@ -50,7 +63,8 @@ export class PostFormBasic implements OnInit {
                 post_config_id: [ this.post_config_id ],
                 title: [],
                 content: [],
-                link: []
+                link: [],
+                password: [],
             });
         }
         else { // edit
@@ -59,7 +73,8 @@ export class PostFormBasic implements OnInit {
                 // post_config_id: [],
                 title: [ this.post.title ],
                 content: [ this.post.content ],
-                link: [ this.post.link ]
+                link: [ this.post.link ],
+                password: [],
             });
         }
         
@@ -108,6 +123,7 @@ export class PostFormBasic implements OnInit {
         this.postData.create( create ).subscribe( ( res: _POST_CREATE_RESPONSE ) => {
             console.log( res );
             this.createSuccess( res.data );
+            this.formGroup.reset();
         }, err => this.postData.alert( err ) );
     }
 

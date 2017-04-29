@@ -9,6 +9,15 @@
     <textarea id="content-box" class="form-control" formControlName="content"></textarea>
     <div class="form-text text-muted">Please, input content</div>
   </div>
+
+
+  <div *ngIf=" ! postComment.logged " class="form-group">
+    <label for="password-box">Password</label>
+    <input class="form-control" id="password-box" formControlName="password">
+    <small class="form-text text-muted">Please input password for edit/delete.</small>
+  </div>
+
+
   
   <button type="submit" class="btn btn-primary">Create Comment</button>
   <button type="button" class="btn btn-primary" (click)="onClickCancel()">Cancel</button>

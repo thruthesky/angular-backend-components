@@ -1,28 +1,52 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { PostComment,
     _COMMENT,
     _POST,
     _POST_LIST_RESPONSE,
     _VOTE_RESPONSE,
-    _REPORT_RESPONSE
+    _REPORT_RESPONSE,
+    _DELETE_RESPONSE,
+    ID_ANONYMOUS
 } from 'angular-backend';
 
 @Component({
     selector: 'comment-view-basic',
-    templateUrl: 'comment-view-basic.html'
+    templateUrl: 'comment-view-basic.html',
+    styles: [ `
+        article {
+            background-color: #ddd;
+        }
+        [depth='0'] { margin-left: 1em }
+        [depth='1'] { margin-left: 2em }
+        [depth='2'] { margin-left: 3em }
+        [depth='3'] { margin-left: 4em }
+        [depth='4'] { margin-left: 4em }
+        [depth='5'] { margin-left: 4em }
+        [depth='6'] { margin-left: 4em }
+        [depth='7'] { margin-left: 4em }
+        [depth='8'] { margin-left: 4em }
+    ` ]
 })
-export class CommentViewBasic {
+export class CommentViewBasic implements OnInit {
     @Input() comment: _COMMENT;
 
     mode: 'create' | 'edit' | '' = '';
     @Input() post: _POST;
     @Input() list: _POST_LIST_RESPONSE;
+
+    showCommentDeletePassword
     constructor(
         private postComment: PostComment,
         private domSanitizer: DomSanitizer
     ) { }
     
+    ngOnInit() {
+        // console.log("this deleted: ", this.comment);
+        if ( this.comment.deleted ) {
+            this.setDeleted();
+        }
+    }
     onClickLike( choice ) {
         this.postComment.vote( this.comment.idx, choice ).subscribe( (res:_VOTE_RESPONSE) => {
             console.log('res: ', res);
@@ -38,8 +62,38 @@ export class CommentViewBasic {
     }
 
 
+    onClickDelete() {
+        if ( this.isAnonymousComment() ) {
+            this.showCommentDeletePassword = true;
+            return;
+        }
+        this.deleteComment();
+    }
+    onClickDeleteAnonymous( password ) {
+        this.deleteComment( password );
+    }
+    deleteComment( password? ) {
+        let req = { idx: this.comment.idx, password: password };
+        console.log(req);
+        this.postComment.delete( req ).subscribe( ( res: _DELETE_RESPONSE ) => {
+            console.log("onClickDelete() subscribe: res", res);
+            this.setDeleted();
+        }, err => this.postComment.alert( err ) );
+    }
 
+
+
+    isAnonymousComment() {
+        return this.comment.user.id == ID_ANONYMOUS;
+    }
+
+
+
+    /**
+     * To show buttons.
+     */
     get myComment() {
+        if ( this.comment.user.id === ID_ANONYMOUS ) return true; //
         return this.comment.user.id == this.postComment.info.id;
     }
 
@@ -49,6 +103,17 @@ export class CommentViewBasic {
         let c = obj['content'].replace(/\n/g, "<br>");
         return this.domSanitizer.bypassSecurityTrustHtml( c ) as string;
         
+    }
+
+
+    setDeleted() {
+
+        this.comment.deleted = 1;
+        this.comment.content = "Deleted...";
+        this.comment.files = [];
+        this.comment.user = <any> {};
+
+        console.log( this.comment );
     }
 
 }
