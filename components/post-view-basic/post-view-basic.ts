@@ -3,6 +3,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import {
     PostData,
     _POST,
+    _POST_EDIT, _POST_EDIT_RESPONSE,
     _POST_LIST_RESPONSE,
     _VOTE_RESPONSE,
     _REPORT_RESPONSE,
@@ -18,7 +19,8 @@ export class PostViewBasic {
     @Input() list: _POST_LIST_RESPONSE;         // whole post list.
     showPostEditForm: boolean = false;
     showCommentForm: boolean = false;
-    showPostDeletePasswordForm: boolean = false; // 여기서부터...
+    showPostDeletePasswordForm: boolean = false;
+    
 
     constructor(
         private postData: PostData,
@@ -102,5 +104,13 @@ export class PostViewBasic {
         return this.domSanitizer.bypassSecurityTrustHtml( c ) as string;
     }
 
-
+    onClickEdit() {
+        let password = prompt("Input Password");
+        let req: _POST_EDIT = {idx: this.post.idx, password: password};
+        this.postData.edit( req ).subscribe( (res: _POST_EDIT_RESPONSE ) => {
+            // password match
+            console.log("res: ", res);
+            this.showPostEditForm = true;
+        }, e => this.postData.alert( e ) );
+    }
 }

@@ -12,7 +12,7 @@
     </div>
 
     <div *ngIf=" ! comment.deleted "  class="buttons">
-        <span *ngIf=" myComment " (click)=" mode = 'edit' " class="">Edit</span>
+        <span *ngIf=" myComment " (click)=" onClickEdit() " class="">Edit</span>
         <span *ngIf=" showCommentDeletePassword ">
           <input #password>
           <button type="button" class="btn btn-danger" (click)=" onClickDeleteAnonymous( password.value ) ">Delete</button>

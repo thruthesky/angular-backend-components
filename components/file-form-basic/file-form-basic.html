@@ -1,10 +1,11 @@
 <div class="form-files clearfix">
-    <div class="file w-25 float-left" *ngFor=" let file of files ">
+    <div class="file w-25 float-left" *ngFor=" let file of files "
+        style="position: relative;">
 
-        <span (click)=" onClickDeleteFile( file ) " class="fa-stack fa-lg">
-            <i class="fa fa-circle fa-stack-2x fa-inverse"></i>
-            <i class="fa fa-trash fa-stack-1x"></i>
-        </span>
+        <div (click)=" onClickDeleteFile( file ) "
+            class="p-2 bg-primary" style="position: absolute; left: 2px; bottom: 2px;">
+            X
+        </div>
 
         <img style="width: 100%" src="{{ file.url + '&crop=100x100x70' }}">
     </div>

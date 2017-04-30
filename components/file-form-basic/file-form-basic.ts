@@ -1,4 +1,5 @@
-import { Component, Input, NgZone } from '@angular/core';
+import { Component, Input, NgZone, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import {
     File,
     _FILE,
@@ -24,15 +25,19 @@ import {
             }
     `]
 })
-export class FileFormBasic {
+export class FileFormBasic implements OnInit {
 
     @Input() files: Array<_FILE>; // pass-by-reference.
+    @Input() form: FormGroup; //
 
     percentage: number = 0;
     constructor( private file: File, private ngZone: NgZone ) {
 
     }
 
+    ngOnInit() {
+        console.log("form: ", this.form);
+    }
 
     onChangeFile( _ ) {
         this.percentage = 1;
@@ -55,8 +60,12 @@ export class FileFormBasic {
 
 
     onClickDeleteFile( file ) {
-        console.log("FileFormComponent::onClickDeleteFile(file): ", file);
-        this.file.delete( file.idx ).subscribe( (res:_DELETE_RESPONSE) => {
+        let req = {
+            idx: file.idx,
+            password: this.form.get('password').value
+        };
+        console.log("FileFormComponent::onClickDeleteFile(file): ", file, this.form);
+        this.file.delete( req ).subscribe( (res:_DELETE_RESPONSE) => {
             console.log("file delete: ", res);
             let i = this.files.findIndex( (f:_FILE) => f.idx == res.data.idx );
             // Object.assign( this.files, files );

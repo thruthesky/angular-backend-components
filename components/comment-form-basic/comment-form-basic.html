@@ -1,8 +1,7 @@
-
 <h4>Comment {{ mode }} {{ mode == 'create' ? 'under ' + parent_idx : comment.idx }}</h4>
-<form [formGroup]="formGroup" (ngSubmit)=" onSubmit() "  novalidate>
+<form [formGroup]="formGroup" (ngSubmit)=" onSubmit() " novalidate>
 
-  <file-form-basic [files]=" files "></file-form-basic>
+  <file-form-basic [files]=" files " [form]="formGroup"></file-form-basic>
   
   <div class="form-group">
     <label for="content-box">Content</label>

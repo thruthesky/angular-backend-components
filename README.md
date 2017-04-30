@@ -2,6 +2,15 @@
 Angular Backend Components
 
 
+# Todo
+
+* edit after password match for anonymous edit.
+  * it is secure, that an anonymous cannot update files, even if password not match because an anonymouse cannot update 'file.finish' unless password match.
+
+* uploaded photo(file) delete
+
+
+
 # Installaton
 
 Inside Angular project,

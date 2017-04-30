@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { PostComment,
     _COMMENT,
+    _COMMENT_EDIT, _COMMENT_EDIT_RESPONSE,
     _POST,
     _POST_LIST_RESPONSE,
     _VOTE_RESPONSE,
@@ -116,4 +117,13 @@ export class CommentViewBasic implements OnInit {
         console.log( this.comment );
     }
 
+    onClickEdit() {
+        let password = prompt("Input Password");
+        let req: _COMMENT_EDIT = {idx: this.comment.idx, password: password};
+        this.postComment.edit( req ).subscribe( (res: _COMMENT_EDIT_RESPONSE ) => {
+            // password match
+            console.log("res: ", res);
+            this.mode = 'edit';
+        }, e => this.postComment.alert( e ) );
+    }
 }
