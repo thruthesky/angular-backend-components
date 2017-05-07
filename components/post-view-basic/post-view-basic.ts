@@ -74,10 +74,14 @@ export class PostViewBasic {
      */
     get myPost() {
         if ( this.post.user === void 0 ) return false; // 'post data' may not have user information.
-        if ( this.post.user.id === ID_ANONYMOUS ) return true; //
+        if ( this.post.user.id === ID_ANONYMOUS ) return false; //
         return this.post.user.id == this.postData.info.id;
     }
 
+
+    get anonymousPost() {
+        return this.isAnonymousPost();
+    }
 
     isAnonymousPost() {
         return this.post.user.id == ID_ANONYMOUS;
@@ -98,13 +102,17 @@ export class PostViewBasic {
      * 
      * @param obj
      */
-    public sanitize( obj ) : string {
+    sanitize( obj ) : string {
         if ( obj === void 0 || obj['content'] === void 0 || ! obj['content'] ) return '';
         let c = obj['content'].replace(/\n/g, "<br>");
         return this.domSanitizer.bypassSecurityTrustHtml( c ) as string;
     }
 
     onClickEdit() {
+        if ( this.myPost ) {
+            this.showPostEditForm = true;
+            return;
+        }
         let password = prompt("Input Password");
         let req: _POST_EDIT = {idx: this.post.idx, password: password};
         this.postData.edit( req ).subscribe( (res: _POST_EDIT_RESPONSE ) => {

@@ -33,7 +33,7 @@
 
 
         
-        <span *ngIf=" myPost " class="card-link" (click)=" onClickEdit() ">Edit</span>
+        <span *ngIf=" myPost || anonymousPost " class="card-link" (click)=" onClickEdit() ">Edit</span>
 
         <span *ngIf=" showPostDeletePasswordForm ">
           <input #password>

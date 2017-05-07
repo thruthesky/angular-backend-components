@@ -1,5 +1,6 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { User, _USER_PASSWORD_CHANGE, _USER_PASSWORD_CHANGE_RESPONSE } from 'angular-backend';
 @Component({
     selector: 'password-change-form-basic',
@@ -10,10 +11,18 @@ export class PasswordChangeFormBasic {
 
     formGroup: FormGroup;
 
+    @Input() displayError: boolean;
+    @Input() routeAfterPasswordChange: string;
+    @Input() routeCancel: string;
+
     @Output() cancel = new EventEmitter<void>();
     @Output() update = new EventEmitter<void>();
+    @Output() error = new EventEmitter<string>();
 
-    constructor( private fb: FormBuilder, private user: User ) {
+
+    errorString: string = null;
+
+    constructor(private router: Router, private fb: FormBuilder, private user: User) {
 
     }
 
@@ -30,6 +39,9 @@ export class PasswordChangeFormBasic {
 
     onClickCancel() {
         this.cancel.emit();
+        if ( this.routeCancel ) {
+            this.router.navigateByUrl(this.routeCancel);
+        }
     }
 
     onClickChangePassword() {
@@ -37,9 +49,21 @@ export class PasswordChangeFormBasic {
             old_password: this.formGroup.get('old_password').value,
             new_password: this.formGroup.get('new_password').value
         };
-        this.user.changePassword( req ).subscribe( (res: _USER_PASSWORD_CHANGE_RESPONSE) => {
+        this.user.changePassword(req).subscribe((res: _USER_PASSWORD_CHANGE_RESPONSE) => {
             this.update.emit();
-        }, err => this.user.alert( err ) );
+
+            if (this.routeAfterPasswordChange) {
+                this.router.navigateByUrl(this.routeAfterPasswordChange);
+            }
+        }, err => {
+            // this.user.alert(err);
+
+            let errstr = this.user.getErrorString(err);
+            this.error.emit(errstr);
+            if (this.displayError) {
+                this.errorString = errstr;
+            }
+        });
     }
 
 }

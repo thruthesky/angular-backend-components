@@ -28,7 +28,24 @@ $ git submodule add https://github.com/thruthesky/angular-backend-components src
 
 
 
-# How to use
+# How to use components
+
+
+* `displayError` - if set true, it display errors on FORM.
+* `routeCancel` - is the route to move when user clicks on 'cancel button'
+* `routeAfterRegister` - is the route to move after registration or update.
+
+
+
+## Sample app
+
+@see [angular-backend-components-how-to-use](https://github.com/thruthesky/angular-backend-components-how-to-use) to get working samples.
+
+
+
+## Sample codes
+
+
 
 app.module.ts
 ````
@@ -91,4 +108,32 @@ app.component.html
   <forum-with-page-navigator *ngIf=" view == 'forum' " [post_config_id]=" 'test' "></forum-with-page-navigator>
   <forum-with-infinite-scroll *ngIf=" view == 'forum-infinite' " [post_config_id]=" 'test' "></forum-with-infinite-scroll>
 </div>
+````
+
+
+## User Login
+
+````
+<login-form-basic
+    [displayError]=" true "
+    [routeAfterLogin]=" '/' "
+    [routeCancel] = " '/' "></login-form-basic>
+````
+
+## User Register
+
+````
+<register-form-basic
+    [displayError]=" true "
+    [routeAfterRegister]=" '/' "
+    [routeCancel] = " '/' "></register-form-basic>
+````
+## Password Change
+
+````
+<password-change-form-basic
+    [displayError]=" true "
+    [routeAfterPasswordChange]=" '/' "
+    [routeCancel] = " '/' "
+    ></password-change-form-basic>
 ````

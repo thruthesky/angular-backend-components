@@ -4,10 +4,11 @@ import {
     PostData,
     File,
     NUMBERS,
-    _FILE,
-    _POST, _POST_CREATE, _POST_CREATE_RESPONSE,
+    _FILE, _POST, _POST_CREATE, _POST_CREATE_RESPONSE,
     _POST_EDIT, _POST_EDIT_RESPONSE
 } from 'angular-backend';
+
+
 
 @Component({
     selector: 'post-form-basic',

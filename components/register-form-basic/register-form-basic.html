@@ -80,6 +80,13 @@
   </div>
 
 
+  <div *ngIf="errorString" class="form-group">
+    <div class="alert alert-warning" role="alert">
+      {{ errorString }}
+    </div>
+  </div>
+
+
   <div class="form-group" *ngIf=" ! user.logged ">
     <button type="button" class="btn btn-success btn-block btn-sm" (click)="onClickRegister()" [disabled]=" ! form.valid ">Register</button>
   </div>

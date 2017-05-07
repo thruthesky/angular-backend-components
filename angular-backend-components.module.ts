@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-// import { RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { LoginFormBasic } from './components/login-form-basic/login-form-basic';
 import { RegisterFormBasic } from './components/register-form-basic/register-form-basic';
 import { PasswordChangeFormBasic } from './components/password-change-form-basic/password-change-form-basic';
@@ -42,8 +42,8 @@ import { ForumWithInfiniteScroll } from './components/forum-with-infinite-scroll
     ],
     imports: [
         CommonModule,
-        FormsModule, ReactiveFormsModule
-        // RouterModule
+        FormsModule, ReactiveFormsModule,
+        RouterModule
     ],
     providers: [  ]
 })
