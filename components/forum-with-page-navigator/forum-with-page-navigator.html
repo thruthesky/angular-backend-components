@@ -11,7 +11,7 @@
     </div>
 
 
-    <button *ngIf=" ! showPostForm " (click)=" showPostForm = true " class="btn btn-secondary">Create New Post</button>
+    <button *ngIf=" ! showPostForm " (click)=" showPostForm = true " class="btn btn-secondary mb-2">Create New Post</button>
     <post-form-basic *ngIf=" showPostForm " [post_config_id]=" post_config_id " [option]=" {
         hideForumID: true
     } " [post]="" (create)=" list.data.posts.unshift( $event ); showPostForm = false " (edit)=" showPostForm = false "

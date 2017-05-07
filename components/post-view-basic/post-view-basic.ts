@@ -114,7 +114,7 @@ export class PostViewBasic {
             return;
         }
         let password = prompt("Input Password");
-        let req: _POST_EDIT = {idx: this.post.idx, password: password};
+        let req: _POST_EDIT = { idx: this.post.idx, password: password };
         this.postData.edit( req ).subscribe( (res: _POST_EDIT_RESPONSE ) => {
             // password match
             console.log("res: ", res);
