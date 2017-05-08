@@ -41,6 +41,7 @@ $ git submodule add https://github.com/thruthesky/angular-backend-components src
 
 @see [angular-backend-components-how-to-use](https://github.com/thruthesky/angular-backend-components-how-to-use) to get working samples.
 
+@see [angular-backend-community-app-basic](https://github.com/thruthesky/angular-backend-community-app-basic)
 
 
 ## Sample codes
