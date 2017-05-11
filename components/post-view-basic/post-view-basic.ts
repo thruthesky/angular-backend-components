@@ -15,12 +15,11 @@ import {
     templateUrl: 'post-view-basic.html'
 })
 export class PostViewBasic {
-    @Input() post: _POST;                       // 'post data' to show in 'view'
-    @Input() list: _POST_LIST_RESPONSE;         // whole post list.
+    @Input() post = <_POST> {};                       // 'post data' to show in 'view'
+    @Input() list = <_POST_LIST_RESPONSE> {};         // whole post list.
     showPostEditForm: boolean = false;
     showCommentForm: boolean = false;
     showPostDeletePasswordForm: boolean = false;
-    
 
     constructor(
         private postData: PostData,

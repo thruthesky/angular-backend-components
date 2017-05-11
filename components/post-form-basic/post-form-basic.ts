@@ -21,7 +21,7 @@ export class PostFormBasic implements OnInit {
     @Output() cancel = new EventEmitter<void>();
 
     @Input() post_config_id: string;            // post config id to create. this is only used when create a new post.
-    @Input() post: _POST = <_POST>{};           // post data to edit. this is only used when editing.
+    @Input() post = <_POST>{};           // post data to edit. this is only used when editing.
     @Input() option;
 
     formGroup: FormGroup;

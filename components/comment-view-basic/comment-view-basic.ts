@@ -30,18 +30,18 @@ import { PostComment,
     ` ]
 })
 export class CommentViewBasic implements OnInit {
-    @Input() comment: _COMMENT;
+    @Input() comment = <_COMMENT>{};
 
     mode: 'create' | 'edit' | '' = '';
-    @Input() post: _POST;
-    @Input() list: _POST_LIST_RESPONSE;
+    @Input() post = <_POST>{};
+    @Input() list = <_POST_LIST_RESPONSE>{};
 
     showCommentDeletePassword
     constructor(
         private postComment: PostComment,
         private domSanitizer: DomSanitizer
     ) { }
-    
+
     ngOnInit() {
         // console.log("this deleted: ", this.comment);
         if ( this.comment.deleted ) {
@@ -103,7 +103,7 @@ export class CommentViewBasic implements OnInit {
         if ( obj === void 0 || obj['content'] === void 0 || ! obj['content'] ) return '';
         let c = obj['content'].replace(/\n/g, "<br>");
         return this.domSanitizer.bypassSecurityTrustHtml( c ) as string;
-        
+
     }
 
 

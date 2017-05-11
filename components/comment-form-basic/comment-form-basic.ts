@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnInit} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 //import 'rxjs/add/operator/debounceTime';
-import { 
+import {
   PostComment,
   File,
   _POST, _POST_LIST_RESPONSE,
@@ -16,24 +16,24 @@ import {
   templateUrl: './comment-form-basic.html'
 })
 export class CommentFormBasic implements OnInit {
-  
+
   @Input() mode: 'create' | 'edit' = 'create';
-  
+
   @Input() parent_idx;          /// only for creating comment. it is not used for editing.
-  @Input() comment: _COMMENT = <_COMMENT> {};   /// only for editing comment.
+  @Input() comment = <_COMMENT>{};   /// only for editing comment.
 
   @Output() cancel = new EventEmitter<void>();
   @Output() create = new EventEmitter<_COMMENT>();
   @Output() edit = new EventEmitter<_COMMENT>();
-  
-  
-  
+
+
+
   formGroup: FormGroup;
   files: Array<_FILE> = [];
 
 
-  @Input() post: _POST;                 /// pass-by-reference. Parent post data.
-  @Input() list: _POST_LIST_RESPONSE;    /// pass-by-reference. For inserting newly created comment in proper place.
+  @Input() post = <_POST>{};                 /// pass-by-reference. Parent post data.
+  @Input() list = <_POST_LIST_RESPONSE>{};    /// pass-by-reference. For inserting newly created comment in proper place.
 
   constructor(
     private fb: FormBuilder,
@@ -72,7 +72,7 @@ export class CommentFormBasic implements OnInit {
   }
   createComment() {
     console.log( "CommentFormComponent::createComment() Going to create a comment: ", this.formGroup.value );
-    
+
     let req: _COMMENT_CREATE = {
       parent_idx: this.parent_idx,
       content: this.formGroup.get('content').value,
@@ -100,12 +100,12 @@ export class CommentFormBasic implements OnInit {
 
       this.createSuccess( res.data );
     }, err => this.postComment.alert(err) );
-    
+
   }
 
   editComment() {
     console.log( "CommentFormComponent::editComment() Going to edit a comment: ", this.formGroup.value );
-    
+
     let req: _COMMENT_EDIT = {
       idx: this.comment.idx,
       content: this.formGroup.get('content').value,
@@ -135,7 +135,7 @@ export class CommentFormBasic implements OnInit {
     this.reset();
     this.edit.emit( comment );
   }
-  
+
 
   onClickCancel() {
     this.cancel.emit();
