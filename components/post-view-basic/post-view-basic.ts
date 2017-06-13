@@ -27,7 +27,6 @@ export class PostViewBasic {
     ) {}
 
     ngOnInit() {
-        // console.log("post-view-basic-component: post: ", this.post);
         if ( this.post.deleted ) {
             this.setDeleted();
         }
@@ -35,7 +34,6 @@ export class PostViewBasic {
 
     onClickLike( choice ) {
         this.postData.vote( this.post.idx, choice ).subscribe( (res:_VOTE_RESPONSE) => {
-            console.log('res: ', res);
             this.post.vote_good = res.data.vote_good;
             this.post.vote_bad = res.data.vote_bad;
         }, err => this.postData.alert( err ) );
@@ -43,7 +41,6 @@ export class PostViewBasic {
 
     onClickReport() {
         this.postData.report( this.post.idx ).subscribe( (res:_REPORT_RESPONSE) => {
-            console.log('res: ', res);
             this.post.report = res.data.report;
         }, err => this.postData.alert( err ) );
     }
@@ -61,9 +58,7 @@ export class PostViewBasic {
     }
     deletePost( password? ) {
         let req = { idx: this.post.idx, password: password };
-        console.log(req);
         this.postData.delete( req ).subscribe( ( res: _DELETE_RESPONSE ) => {
-            console.log("onClickDelete() subscribe: res", res);
             this.setDeleted();
         }, err => this.postData.alert( err ) );
     }
@@ -116,7 +111,6 @@ export class PostViewBasic {
         let req: _POST_EDIT = { idx: this.post.idx, password: password };
         this.postData.edit( req ).subscribe( (res: _POST_EDIT_RESPONSE ) => {
             // password match
-            console.log("res: ", res);
             this.showPostEditForm = true;
         }, e => this.postData.alert( e ) );
     }

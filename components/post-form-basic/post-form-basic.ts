@@ -21,7 +21,7 @@ export class PostFormBasic implements OnInit {
     @Output() cancel = new EventEmitter<void>();
 
     @Input() post_config_id: string;            // post config id to create. this is only used when create a new post.
-    @Input() post = <_POST>{};           // post data to edit. this is only used when editing.
+    @Input() post = <_POST>{};                  // post data to edit. this is only used when editing.
     @Input() option;
 
     formGroup: FormGroup;
@@ -47,18 +47,11 @@ export class PostFormBasic implements OnInit {
     }
 
     ngOnInit() {
-
         this.option = Object.assign( this.default, this.option );
-        /// test
-        //this.post_config_id = 'qna'; // test
         this.createForm();
-        //this.createPost(); // test
     }
     createForm() {
-
-        console.log('post config id: ', this.post_config_id );
         if ( this.isCreate() ) {
-            console.log("creating");
             this.files = [];
             this.formGroup = this.fb.group({
                 post_config_id: [ this.post_config_id ],
@@ -68,25 +61,19 @@ export class PostFormBasic implements OnInit {
                 password: [],
             });
         }
-        else { // edit
+        else {
             this.files = this.post.files ? this.post.files : [];
             this.formGroup = this.fb.group({
-                // post_config_id: [],
                 title: [ this.post.title ],
                 content: [ this.post.content ],
                 link: [ this.post.link ],
                 password: [],
             });
         }
-        
-
-        console.log( this.formGroup.value );
-
     }
 
 
     onSubmit() {
-        console.log( this.formGroup.value );
         if ( this.isCreate() ) this.createPost();
         else this.editPost();
     }
@@ -104,7 +91,6 @@ export class PostFormBasic implements OnInit {
     }
     editSuccess( post: _POST ) {
         this.reset();
-        console.log("emit: ", post);
         this.edit.emit( post );
     }
 
@@ -119,10 +105,8 @@ export class PostFormBasic implements OnInit {
      */
     createPost() {
         let create = <_POST_CREATE> this.formGroup.value;
-        //create.post_config_id = this.post_config_id;
         create.file_hooks = this.files.map( (f:_FILE) => f.idx );
         this.postData.create( create ).subscribe( ( res: _POST_CREATE_RESPONSE ) => {
-            console.log( res );
             this.createSuccess( res.data );
             this.formGroup.reset();
         }, err => this.postData.alert( err ) );
@@ -135,11 +119,8 @@ export class PostFormBasic implements OnInit {
         let edit = <_POST_EDIT> this.formGroup.value;
         edit.idx = this.post.idx;
         edit.file_hooks = this.files.map( (f:_FILE) => f.idx );
-        console.log('post-form-conpoment::editPost()', edit);
         this.postData.edit( edit ).subscribe( ( res: _POST_EDIT_RESPONSE ) => {
-            console.log( 'after edit: ', res );
             Object.assign( this.post, res.data ); // two-way binding since it is pass-by-reference.
-            //this.post = res.data;
             this.editSuccess( res.data );
         }, err => this.postData.alert( err ) );
     }

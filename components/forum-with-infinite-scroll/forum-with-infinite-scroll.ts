@@ -54,22 +54,17 @@ export class ForumWithInfiniteScroll {
     }
     onLoaded(res: _POST_LIST_RESPONSE) {
         this.postListResponse = res;
-        console.log('res:', res);
     }
 
     load() {
-        console.log("load() is called");
         if (this.inLoading) {
-            console.log("but it's still loading previous page. so, just don't do anything");
             return;
         }
         if (this.noMorePosts) {
-            console.log("but no more posts. so don't do anything");
             return;
         }
         this.inLoading = true;
         this.page++;
-        console.log("loading page: ", this.page);
 
         let req: _LIST = {
             where: 'parent_idx=?',
@@ -87,7 +82,6 @@ export class ForumWithInfiniteScroll {
         };
 
         this.postData.list(req).subscribe((res: _POST_LIST_RESPONSE) => {
-            console.log('post list: ', res);
             this.inLoading = false;
             this.lists.push(res);
             if (res.data.posts.length == 0) this.noMorePosts = true;
@@ -105,7 +99,6 @@ export class ForumWithInfiniteScroll {
 
         let element = document.querySelector(selector);
         if (element === void 0 || !element) {
-            console.error("No element to watch on scrolling. Wrong query selector.");
             return;
         }
 
@@ -113,7 +106,6 @@ export class ForumWithInfiniteScroll {
             .debounceTime(100)
             .map((e: any) => {
                 this.scrollCount++;
-                // console.log("scrollCount: ", this.scrollCount);
                 return e;
             })
             .filter((x: any) => {
@@ -121,12 +113,9 @@ export class ForumWithInfiniteScroll {
 
                 let elementHeight = element['offsetTop'] + element['clientHeight'];
                 let windowYPosition = window.pageYOffset + window.innerHeight;
-                // console.log("page scroll reaches at bottom: windowYPosition=" + windowYPosition + ", elementHeight-distance=" + (elementHeight-distance));
 
                 if (windowYPosition > elementHeight - distance) { // page scrolled. the distance to the bottom is within 200 px from
                     this.scrollCountOnDistance++;
-                    // console.log( "scrollCountOnDistance", this.scrollCountOnDistance );
-
                     return true;
                 }
 

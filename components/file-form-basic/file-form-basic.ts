@@ -36,21 +36,17 @@ export class FileFormBasic implements OnInit {
     }
 
     ngOnInit() {
-        console.log("form: ", this.form);
     }
 
     onChangeFile( _ ) {
         this.percentage = 1;
         this.file.uploadPostFile( _.files[0], percentage => {
-            console.log('percentage:', percentage);
             this.percentage = percentage;
             this.ngZone.run( () => {} );
         } ).subscribe( (res:_UPLOAD_RESPONSE) => {
             this.files.push( res.data );
-            console.log('files: ', this.files);
             this.percentage = 0;
         }, err => {
-            console.log('err:', err);
             if ( this.file.isError(err) == ERROR_NO_FILE_SELECTED ) return;
             this.file.alert(err);
         });
@@ -64,15 +60,9 @@ export class FileFormBasic implements OnInit {
             idx: file.idx,
             password: this.form.get('password').value
         };
-        console.log("FileFormComponent::onClickDeleteFile(file): ", file, this.form);
         this.file.delete( req ).subscribe( (res:_DELETE_RESPONSE) => {
-            console.log("file delete: ", res);
             let i = this.files.findIndex( (f:_FILE) => f.idx == res.data.idx );
-            // Object.assign( this.files, files );
-
             this.files.splice( i, 1 );
-
-            console.log('files: ', this.files);
         }, err => this.file.alert(err) );
     }
 

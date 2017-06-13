@@ -37,18 +37,13 @@ export class PageNavigatorBasic {
   @Output() pageClick = new EventEmitter();
 
   constructor() {
-    //console.log('pagination::constructor()');
   }
 
   ngOnChanges(){
-    //console.log("ngOnChanges: ...");
     if ( this.no_of_total_items > 0 ) this.showPagination();
   }
 
   showPagination() {
-    //console.log('this.no_of_total_items:', this.no_of_total_items);
-    //console.log('this.no_of_items_in_one_page:', this.no_of_items_in_one_page);
-    //console.log('this.no_of_pages_in_navigator:', this.no_of_pages_in_navigator);
     this.no_of_total_pages = Math.ceil(this.no_of_total_items / this.no_of_items_in_one_page);
 
     this.currentDisplay = Math.floor( (this.no_of_current_page -1) / this.no_of_pages_in_navigator);
@@ -60,20 +55,16 @@ export class PageNavigatorBasic {
         this.numbers.push( current_page_no + 1 );
       }
     }
-    //console.log('numbers: ', this.numbers);
   }
   nextPage(){
     let nextPage = (this.currentDisplay + 1) * this.no_of_pages_in_navigator + 1;
-    //console.log('nextPage: ', nextPage);
     this.pageClick.emit( nextPage );
   }
   previousPage(){
     let prevPage = (this.currentDisplay) * this.no_of_pages_in_navigator;
-    //console.log('prev: ', prevPage);
     this.pageClick.emit( prevPage );
   }
   gotoPage( page ) {
-    //console.log('page: ', page);
     this.pageClick.emit( page );
   }
   gotoLast() {
@@ -82,7 +73,4 @@ export class PageNavigatorBasic {
   gotoFirst() {
     this.pageClick.emit( 1 );
   }
-
-
-
 }

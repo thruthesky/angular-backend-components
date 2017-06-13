@@ -139,24 +139,16 @@ export class RegisterFormBasic {
 
 
   loadUserData() {
-
     this.user.data().subscribe((res: _USER_DATA_RESPONSE) => {
-
       this.data = res.data.user;
       this.data = this.user.composeBirthday(this.data);
-      // console.log(this.data);
-
       this.form.patchValue(this.data);
-
     }, (err: _RESPONSE) => {
-      console.log('err: ', err);
       if (err.code == ERROR_WRONG_SESSION_ID_NO_USER_DATA_BY_THAT_SESSION_ID) {
         this.user.deleteSessionInfo();
         alert("WARNING: Your login had invalidated. Please login again.");
       }
       else {
-        // this.user.alert(err);
-        // this.error.emit( this.user.getErrorString( err ) );
         this.doError(err);
       }
     });
@@ -175,16 +167,12 @@ export class RegisterFormBasic {
     this.file.uploadPrimaryPhoto(_.files[0], p => {
       this.percentage = p;
       this.ngZone.run(() => { });
-      console.log('p: ', this.percentage);
     })
       .subscribe(res => {
-        console.log("Register::onChangeFileUpload:: success: ", res);
         (<u>this.data).primary_photo = res.data;
         this.percentage = 0;
       }, err => {
         this.percentage = 0;
-        // this.file.alert(err);
-        // this.error.emit( this.user.getErrorString( err ) );
         this.doError(err);
       });
   }
@@ -195,76 +183,40 @@ export class RegisterFormBasic {
    * @see readme#registration
    */
   onClickRegister() {
-
-    console.log(this.form.value);
-
     let register = this.user.splitBirthdays(<_USER_CREATE>this.form.value);
-
-
     if ((<u>this.data).primary_photo) register.file_hooks = [(<u>this.data).primary_photo.idx];
-    this.user.register(register).subscribe(res => {
-
-      // console.log('register: ', register);
-
-      //this.router.navigate( [ '/' ] );
-
-
+      this.user.register(register).subscribe(res => {
       this.register.emit();
-
       if (this.routeAfterRegister) {
         this.router.navigateByUrl(this.routeAfterRegister);
       }
-
-
     }, err => {
-      // this.user.alert( err );
-      // this.error.emit( this.user.getErrorString( err ) );
       this.doError(err);
     });
-
   }
-
-
 
   onClickUpdate() {
     let edit = this.user.splitBirthdays(<_USER_EDIT>this.form.value);
-
-
-    /// When register, "id, password" exist. If the user registers, then it must be deleted. But if the user does not register, (only update, already register), id, pw does not exists.
     if (edit['id'] !== void 0) delete edit['id'];
     if (edit['password'] !== void 0) delete edit['password'];
-
     this.user.edit(edit).subscribe((res: _USER_EDIT_RESPONSE) => {
-      console.log(res);
       this.update.emit();
-
       if (this.routeAfterRegister) {
         this.router.navigateByUrl(this.routeAfterRegister);
       }
-
     }, err => {
-      // this.user.alert( err );
-      // this.error.emit( this.user.getErrorString( err ) );
       this.doError(err);
     });
   }
 
 
   onClickDeletePhoto() {
-    console.log("FileFormComponent::onClickDeleteFile(file): ", (<u>this.data).primary_photo);
-
     this.file.delete((<u>this.data).primary_photo.idx).subscribe((res: _DELETE_RESPONSE) => {
-      console.log("file delete: ", res);
       (<u>this.data).primary_photo = <any>{};
     }, err => {
-      // this.user.alert( err );
-      // this.error.emit( this.user.getErrorString( err ) );
       this.doError(err);
     });
   }
-
-
-  ////
 
   onClickCancel() {
     this.cancel.emit();
@@ -274,11 +226,9 @@ export class RegisterFormBasic {
   }
 
 
-  /// error process
   doError(err) {
     let errstr = this.user.getErrorString(err);
     this.error.emit(errstr);
-    // console.log( err );
     if (this.displayError) {
       this.errorString = errstr;
     }

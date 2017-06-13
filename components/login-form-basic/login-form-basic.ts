@@ -29,7 +29,6 @@ export class LoginFormBasic {
   onClickLogin() {
     this.errorString = null;
     this.user.login(this.form).subscribe((res: _USER_LOGIN_RESPONSE) => {
-      console.log(res);
       this.login.emit(res);
       if (this.routeAfterLogin) {
         this.router.navigateByUrl(this.routeAfterLogin);
@@ -37,8 +36,6 @@ export class LoginFormBasic {
     }, err => {
       let errstr = this.user.getErrorString(err);
       this.error.emit(errstr);
-      //this.user.alert(err);
-      // console.log( err );
       if (this.displayError) {
         this.errorString = errstr;
       }

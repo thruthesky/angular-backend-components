@@ -43,21 +43,18 @@ export class CommentViewBasic implements OnInit {
     ) { }
 
     ngOnInit() {
-        // console.log("this deleted: ", this.comment);
         if ( this.comment.deleted ) {
             this.setDeleted();
         }
     }
     onClickLike( choice ) {
         this.postComment.vote( this.comment.idx, choice ).subscribe( (res:_VOTE_RESPONSE) => {
-            console.log('res: ', res);
             this.comment.vote_good = res.data.vote_good;
             this.comment.vote_bad = res.data.vote_bad;
         }, err => this.postComment.alert( err ) );
     }
     onClickReport() {
         this.postComment.report( this.comment.idx ).subscribe( (res:_REPORT_RESPONSE) => {
-            console.log('res: ', res);
             this.comment.report = res.data.report;
         }, err => this.postComment.alert( err ) );
     }
@@ -75,9 +72,7 @@ export class CommentViewBasic implements OnInit {
     }
     deleteComment( password? ) {
         let req = { idx: this.comment.idx, password: password };
-        console.log(req);
         this.postComment.delete( req ).subscribe( ( res: _DELETE_RESPONSE ) => {
-            console.log("onClickDelete() subscribe: res", res);
             this.setDeleted();
         }, err => this.postComment.alert( err ) );
     }
@@ -113,16 +108,12 @@ export class CommentViewBasic implements OnInit {
         this.comment.content = "Deleted...";
         this.comment.files = [];
         this.comment.user = <any> {};
-
-        console.log( this.comment );
     }
 
     onClickEdit() {
         let password = prompt("Input Password");
         let req: _COMMENT_EDIT = {idx: this.comment.idx, password: password};
         this.postComment.edit( req ).subscribe( (res: _COMMENT_EDIT_RESPONSE ) => {
-            // password match
-            console.log("res: ", res);
             this.mode = 'edit';
         }, e => this.postComment.alert( e ) );
     }

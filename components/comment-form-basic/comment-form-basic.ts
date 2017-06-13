@@ -43,13 +43,10 @@ export class CommentFormBasic implements OnInit {
   }
 
   ngOnInit() {
-    console.log('parent post: ', this.post);
     this.createForm();
   }
 
   createForm() {
-    console.log("CommentFormComponent::createForm() : mode: ", this.mode);
-    console.log("CommentFormComponent::createForm()", this.comment);
 
     if ( this.mode == 'create' ) {
       this.formGroup = this.fb.group({
@@ -71,7 +68,6 @@ export class CommentFormBasic implements OnInit {
     else this.editComment();
   }
   createComment() {
-    console.log( "CommentFormComponent::createComment() Going to create a comment: ", this.formGroup.value );
 
     let req: _COMMENT_CREATE = {
       parent_idx: this.parent_idx,
@@ -82,13 +78,7 @@ export class CommentFormBasic implements OnInit {
     req.file_hooks = this.files.map( (f:_FILE) => f.idx );
 
     this.postComment.create( req ).subscribe( res => {
-      console.log('comment create: ', res);
-
-
-      /// inserting comment into the proper position.
-      //let post = this.list.data.posts.find( (post: _POST) => post.idx == res.data.root_idx );
       let post = this.post;
-      console.log('parent post: ', post);
       if ( post === void 0 ) return;
       if ( post.comments === void 0 ) post.comments = [];
 
@@ -104,7 +94,6 @@ export class CommentFormBasic implements OnInit {
   }
 
   editComment() {
-    console.log( "CommentFormComponent::editComment() Going to edit a comment: ", this.formGroup.value );
 
     let req: _COMMENT_EDIT = {
       idx: this.comment.idx,
@@ -112,11 +101,8 @@ export class CommentFormBasic implements OnInit {
       password: this.formGroup.get('password').value
     };
     req.file_hooks = this.files.map( (f:_FILE) => f.idx );
-            console.log('files: ', this.files);
-            console.log('file_hooks', req.file_hooks);
 
     this.postComment.edit( req ).subscribe( (res:_COMMENT_EDIT_RESPONSE) => {
-      console.log('editComment():', res.data);
       Object.assign( this.comment, res.data ); // two-way binding. pass-by-reference.
       this.editSuccess( res.data );
     }, err => this.postComment.alert( err ));
@@ -135,8 +121,6 @@ export class CommentFormBasic implements OnInit {
     this.reset();
     this.edit.emit( comment );
   }
-
-
   onClickCancel() {
     this.cancel.emit();
   }

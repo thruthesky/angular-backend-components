@@ -46,15 +46,10 @@ export class ForumWithPageNavigator {
 
   onLoaded(res: _POST_LIST_RESPONSE) {
     this.postListResponse = res;
-
-    console.log('res:', res);
-
   }
 
 
   onPageClick(page) {
-    console.log('onPageClick::page : ', page);
-
     this.load({
       page: page
     });
@@ -79,7 +74,6 @@ export class ForumWithPageNavigator {
     };
 
     this.postData.list(req).subscribe((res: _POST_LIST_RESPONSE) => {
-      console.log('forum-with-page-navigator: post list: ', res);
       this.list = res;
     }, err => this.postData.alert(err));
   }
