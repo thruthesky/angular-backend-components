@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-// import { ActivatedRoute } from '@angular/router';
 import 'rxjs/add/operator/debounceTime';
 import {
   PostData,
@@ -27,21 +26,11 @@ export class ForumWithPageNavigator {
   showPostForm: boolean = false;
 
 
-  constructor(
-    // private activated: ActivatedRoute,
-    private postData: PostData) {
-
+  constructor( private postData: PostData ) {
   }
 
   ngOnInit() {
     this.load();
-    // this.activated.params.subscribe( params => {
-    //   if ( params['post_config_id'] !== void 0 ) {
-    //     this.post_config_id = params['post_config_id'];
-
-    //     this.load();
-    //   }
-    // });
   }
 
   onLoaded(res: _POST_LIST_RESPONSE) {

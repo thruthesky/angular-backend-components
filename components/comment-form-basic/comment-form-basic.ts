@@ -1,6 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-//import 'rxjs/add/operator/debounceTime';
 import {
   PostComment,
   File,
@@ -19,8 +18,8 @@ export class CommentFormBasic implements OnInit {
 
   @Input() mode: 'create' | 'edit' = 'create';
 
-  @Input() parent_idx;          /// only for creating comment. it is not used for editing.
-  @Input() comment = <_COMMENT>{};   /// only for editing comment.
+  @Input() parent_idx;              /// only for creating comment. it is not used for editing.
+  @Input() comment = <_COMMENT>{};  /// only for editing comment.
 
   @Output() cancel = new EventEmitter<void>();
   @Output() create = new EventEmitter<_COMMENT>();
@@ -33,7 +32,7 @@ export class CommentFormBasic implements OnInit {
 
 
   @Input() post = <_POST>{};                 /// pass-by-reference. Parent post data.
-  @Input() list = <_POST_LIST_RESPONSE>{};    /// pass-by-reference. For inserting newly created comment in proper place.
+  @Input() list = <_POST_LIST_RESPONSE>{};   /// pass-by-reference. For inserting newly created comment in proper place.
 
   constructor(
     private fb: FormBuilder,

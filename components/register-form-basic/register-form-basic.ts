@@ -49,7 +49,6 @@ export class RegisterFormBasic {
     private fb: FormBuilder,
     public user: User,
     private ngZone: NgZone,
-    //private router: Router,
     private file: File) {
 
 
@@ -68,7 +67,6 @@ export class RegisterFormBasic {
     }
 
     this.form.valueChanges
-      //.debounceTime( 500 )
       .subscribe(res => this.onValueChanged(res));
 
 

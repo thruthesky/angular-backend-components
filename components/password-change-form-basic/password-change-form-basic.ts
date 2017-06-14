@@ -56,8 +56,6 @@ export class PasswordChangeFormBasic {
                 this.router.navigateByUrl(this.routeAfterPasswordChange);
             }
         }, err => {
-            // this.user.alert(err);
-
             let errstr = this.user.getErrorString(err);
             this.error.emit(errstr);
             if (this.displayError) {

@@ -28,7 +28,7 @@ import {
 export class FileFormBasic implements OnInit {
 
     @Input() files: Array<_FILE>; // pass-by-reference.
-    @Input() form: FormGroup; //
+    @Input() form: FormGroup;
 
     percentage: number = 0;
     constructor( private file: File, private ngZone: NgZone ) {

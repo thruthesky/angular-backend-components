@@ -67,8 +67,8 @@ export class PostViewBasic {
      * To show buttons.
      */
     get myPost() {
-        if ( this.post.user === void 0 ) return false; // 'post data' may not have user information.
-        if ( this.post.user.id === ID_ANONYMOUS ) return false; //
+        if ( this.post.user === void 0 ) return false;          // 'post data' may not have user information.
+        if ( this.post.user.id === ID_ANONYMOUS ) return false;
         return this.post.user.id == this.postData.info.id;
     }
 

@@ -89,7 +89,7 @@ export class CommentViewBasic implements OnInit {
      * To show buttons.
      */
     get myComment() {
-        if ( this.comment.user.id === ID_ANONYMOUS ) return true; //
+        if ( this.comment.user.id === ID_ANONYMOUS ) return true;
         return this.comment.user.id == this.postComment.info.id;
     }
 
